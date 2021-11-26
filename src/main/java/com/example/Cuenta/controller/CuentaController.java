@@ -2,6 +2,7 @@ package com.example.Cuenta.controller;
 
 import com.example.Cuenta.config.NonExistentException;
 import com.example.Cuenta.entity.Cuenta;
+import com.example.Cuenta.entity.Movimiento;
 import com.example.Cuenta.service.CuentaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ public class CuentaController {
         return cuentas;
     }
 
+
+
     @GetMapping("/buscarPorUsuario/{usuario}")
     public List<Cuenta> getCuentaUsuario(@PathVariable String usuario) throws NonExistentException {
         List<Cuenta> cuentas = cuentaServicio.getCuentaUsuario(usuario);
@@ -39,6 +42,8 @@ public class CuentaController {
         return ResponseEntity.ok(cuentaServicio.nuevaCuenta(cuenta));
     }
 
+
+
     @PutMapping("/depositar/{numeroCuenta}/{cantidad}")
     public ResponseEntity<String> getDepositar(@PathVariable Double cantidad, @PathVariable Integer numeroCuenta) {
         double cantidadFinal = cuentaServicio.getCantidadFinalDeposito(cantidad, numeroCuenta);
@@ -51,6 +56,12 @@ public class CuentaController {
         double cantidadFinal = cuentaServicio.getCantidadFinalRetiro(cantidad, numeroCuenta);
         String mensaje = "Su saldo actual es " + cantidadFinal;
         return ResponseEntity.ok(mensaje);
+    }
+
+    @DeleteMapping("/eliminarCuenta/{idCuenta}")
+    public ResponseEntity<String> eliminarCuenta(@PathVariable ("idCuenta") Integer idCuenta){
+        cuentaServicio.eliminarCuenta(idCuenta);
+        return ResponseEntity.ok("Se elimino la cuenta correctamente");
     }
 
 }
