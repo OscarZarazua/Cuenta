@@ -3,6 +3,7 @@ package com.example.Cuenta.service;
 import com.example.Cuenta.entity.CajaAhorro;
 import com.example.Cuenta.entity.Cuenta;
 import com.example.Cuenta.entity.CuentaCorriente;
+import com.example.Cuenta.entity.Movimiento;
 import com.example.Cuenta.repository.CuentaRepositoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,6 @@ public class CuentaServicio {
         }
         return "Cuenta ya existente";
     }
-
 
     public List<Cuenta> getIdCuenta(Integer idCuenta) {
         return cuentaRepositoryDao.findByIdCuenta(idCuenta);
@@ -61,5 +61,18 @@ public class CuentaServicio {
             cuentaRepositoryDao.save(cuenta);
             return cuenta.getBalance();
         }
+    }
+
+    public void eliminarCuenta(Integer idCuenta) {
+        cuentaRepositoryDao.deleteById(idCuenta);
+    }
+
+
+    public Cuenta getNumeroCuenta(Integer numeroCuenta) {
+        return cuentaRepositoryDao.findByNumeroCuenta(numeroCuenta);
+    }
+
+    public List<Cuenta> getCuentas() {
+        return (List<Cuenta>) cuentaRepositoryDao.findAll();
     }
 }
